@@ -1,20 +1,6 @@
-const Koa = require('koa')
+const app = require('./app')
 
-const Router = require('@koa/router')
 const { SERVER_PORT } = require('./config/server')
-
-const userRouter = new Router({
-  prefix: '/user'
-})
-
-userRouter.get('/list', (ctx, next) => {
-  ctx.body = '服务器访问成功'
-})
-
-const app = new Koa()
-
-app.use(userRouter.routes())
-app.use(userRouter.allowedMethods)
 
 app.listen(SERVER_PORT, () => {
   console.log(`服务器启动在：http://localhost:${SERVER_PORT}`)
