@@ -9,9 +9,10 @@ class UserService {
     return connection.execute(statement, [name, password])
   }
 
-  findUserByName(name) {
+  async findUserByName(name) {
     const statement = 'SELECT * FROM `user` WHERE name = ?'
-    return connection.execute(statement, [name])
+    const [users] = await connection.execute(statement, [name])
+    return users
   }
 }
 

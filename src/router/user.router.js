@@ -1,5 +1,5 @@
 const Router = require('@koa/router')
-const controller = require('../controller/user.controller')
+const userController = require('../controller/user.controller')
 const { verifyUser, encryptPassword } = require('../middleware/user.middleware')
 
 const userRouter = new Router({
@@ -7,6 +7,6 @@ const userRouter = new Router({
 })
 
 // 注册用户
-userRouter.post('/register',verifyUser, encryptPassword, controller.create)
+userRouter.post('/register',verifyUser, encryptPassword, userController.create)
 
 module.exports = userRouter

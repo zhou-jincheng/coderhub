@@ -12,8 +12,8 @@ const verifyUser = async (ctx, next) => {
     return
   }
 
-  const [values] = await userService.findUserByName(name)
-  if (values.length) {
+  const users = await userService.findUserByName(name)
+  if (users.length) {
     ctx.app.emit('error', NAME_IS_ALREADY_EXISTS, ctx)
     return
   }
