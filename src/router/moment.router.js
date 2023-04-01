@@ -8,5 +8,6 @@ const momentRouter = new KoaRouter({
 
 momentRouter.post('/', verifyAuth, momentController.create)
 momentRouter.get('/list', momentController.queryList)
+momentRouter.get('/:momentId', momentController.queryById)
 
 module.exports = momentRouter
