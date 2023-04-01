@@ -32,7 +32,11 @@ const verifyLogin = async (ctx, next) => {
 }
 
 const verifyAuth = async (ctx, next) => {
-  const authorization = ctx.headers.authorization || ''
+  const authorization = ctx.headers.authorization
+  if (!authorization) {
+    ctx.app.emit('error', NO_AUTHORIZATION, ctx)
+    return
+  }
   const token = authorization.replace('Bearer ', '')
 
   try {

@@ -1,5 +1,5 @@
 const app = require('../app')
-const { NAME_OR_PASSWORD_IS_REQUIRED, NAME_IS_ALREADY_EXISTS, NAME_IS_NOT_EXISTS, PASSWORD_IS_INCORRECT, NO_AUTHORIZATION } = require('../config/error')
+const { NAME_OR_PASSWORD_IS_REQUIRED, NAME_IS_ALREADY_EXISTS, NAME_IS_NOT_EXISTS, PASSWORD_IS_INCORRECT, NO_AUTHORIZATION, CONTENT_IS_EMPTY } = require('../config/error')
 
 app.on('error', (type, ctx) => {
   let code = -1000
@@ -24,6 +24,10 @@ app.on('error', (type, ctx) => {
     case NO_AUTHORIZATION:
       code = -1005
       message = 'token无效或已过期~'
+      break
+    case CONTENT_IS_EMPTY:
+      code = -1006
+      message = '用户动态不能为空~'
       break
   }
   ctx.body = {
