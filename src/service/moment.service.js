@@ -55,6 +55,18 @@ class MomentService {
     const [result] = await connection.execute(statement, [id])
     return result
   }
+
+  async addLabel(momentId, labelId) {
+    const statement = `INSERT INTO moment_label (moment_id, label_id) VALUES (?, ?)`
+    const [result] = await connection.execute(statement, [momentId, labelId])
+    return result
+  }
+
+  async hasLabel(momentId, labelId) {
+    const statement = `SELECT * FROM moment_label WHERE moment_id = ? AND label_id = ?`
+    const [result] = await connection.execute(statement, [momentId, labelId])
+    return !!result.length
+  }
 }
 
 module.exports = new MomentService

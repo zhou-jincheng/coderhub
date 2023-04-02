@@ -59,6 +59,29 @@ class MomentController {
       message: '删除成功！'
     }
   }
+
+  async addLabels(ctx, next) {
+    const labels = ctx.labels
+    const { momentId } = ctx.params
+    
+    try {
+      for (const label of labels) {
+        const isExists = await momentService.hasLabel(momentId, label.id)
+        if (!isExists) {
+          await momentService.addLabel(momentId, label.id)
+        }
+      }
+      ctx.body = {
+        code: 0,
+        message: '为动态添加标签成功！'
+      }
+    } catch (error) {
+      ctx.body = {
+        code: 0,
+        message: '发生错误，请检查数据~'
+      }
+    }
+  }
 }
 
 module.exports = new MomentController()
