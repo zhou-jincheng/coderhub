@@ -15,5 +15,6 @@ momentRouter.get('/:momentId', momentController.queryById)
 // 修改
 momentRouter.patch('/:momentId', verifyAuth, verifyMomentPermission, momentController.update)
 // 删除
+momentRouter.delete('/:momentId', verifyAuth, verifyMomentPermission, momentController.delete)
 
 module.exports = momentRouter
