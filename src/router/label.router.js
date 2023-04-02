@@ -7,5 +7,6 @@ const labelRouter = new KoaRouter({
 })
 
 labelRouter.post('/', verifyAuth, labelController.create)
+labelRouter.get('/list', labelController.queryList)
 
 module.exports = labelRouter
