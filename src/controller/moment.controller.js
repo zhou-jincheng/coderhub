@@ -1,5 +1,6 @@
 const { CONTENT_IS_EMPTY } = require("../config/error")
 const momentService = require('../service/moment.service')
+const permissionService = require("../service/permission.service")
 
 class MomentController {
   async create(ctx, next) {

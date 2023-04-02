@@ -11,7 +11,8 @@ class MomentService {
     const statement = `
       SELECT
       m.id id, m.content content, m.createAt createAt, m.updateAt updateAt,
-      JSON_OBJECT('id', u.id, 'name', u.name, 'createAt', u.createAt, 'updateAt', u.updateAt) user
+      JSON_OBJECT('id', u.id, 'name', u.name, 'createAt', u.createAt, 'updateAt', u.updateAt) user,
+      (SELECT COUNT(*) FROM comment WHERE comment.moment_id = m.id) commentCount
       FROM moment m
       LEFT JOIN user u
       ON m.user_id = u.id
@@ -24,12 +25,20 @@ class MomentService {
   async queryById(id) {
     const statement = `
       SELECT
-      m.id id, m.content content, m.createAt createAt, m.updateAt updateAt,
-      JSON_OBJECT('id', u.id, 'name', u.name, 'createAt', u.createAt, 'updateAt', u.updateAt) user
+        m.id id, m.content content, m.createAt createAt, m.updateAt updateAt,
+        JSON_OBJECT('id', u.id, 'name', u.name, 'createAt', u.createAt, 'updateAt', u.updateAt) user,
+        JSON_ARRAYAGG(
+          JSON_OBJECT('id', c.id, 'content', c.content, 'commentId', c.comment_id, 'createTime', c.createAt, 'user', 
+            JSON_OBJECT('id', cu.id, 'name', cu.name)
+          )
+        )
+        comments
       FROM moment m
-      LEFT JOIN user u
-      ON m.user_id = u.id
+      LEFT JOIN user u ON u.id = m.user_id
+      LEFT JOIN comment c ON c.moment_id = m.id
+      LEFT JOIN user cu ON cu.id = c.user_id
       WHERE m.id = ?
+      GROUP BY m.id
     `
     const [result] = await connection.execute(statement, [id])
     return result[0]
