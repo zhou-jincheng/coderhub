@@ -1,5 +1,5 @@
 const app = require('../app')
-const { NAME_OR_PASSWORD_IS_REQUIRED, NAME_IS_ALREADY_EXISTS, NAME_IS_NOT_EXISTS, PASSWORD_IS_INCORRECT, NO_AUTHORIZATION, CONTENT_IS_EMPTY, OPERATION_IS_NOT_ALLOWED } = require('../config/error')
+const { NAME_OR_PASSWORD_IS_REQUIRED, NAME_IS_ALREADY_EXISTS, NAME_IS_NOT_EXISTS, PASSWORD_IS_INCORRECT, NO_AUTHORIZATION, CONTENT_IS_EMPTY, OPERATION_IS_NOT_ALLOWED, RESOURCE_IS_NOT_EXISTS } = require('../config/error')
 
 app.on('error', (type, ctx) => {
   let code = -1000
@@ -32,6 +32,10 @@ app.on('error', (type, ctx) => {
     case OPERATION_IS_NOT_ALLOWED:
       code = -1006
       message = '没有操作该资源权限~'
+      break
+    case RESOURCE_IS_NOT_EXISTS:
+      code = -1007
+      message = '资源不存在~'
       break
   }
   ctx.body = {

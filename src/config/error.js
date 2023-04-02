@@ -5,6 +5,7 @@ const PASSWORD_IS_INCORRECT = 'password_is_incorrect'
 const NO_AUTHORIZATION = 'no_authorization'
 const CONTENT_IS_EMPTY = 'content_is_empty'
 const OPERATION_IS_NOT_ALLOWED = 'operation_is_not_allowed'
+const RESOURCE_IS_NOT_EXISTS = 'resource_is_not_exists'
 
 
 module.exports = {
@@ -14,5 +15,6 @@ module.exports = {
   PASSWORD_IS_INCORRECT,
   NO_AUTHORIZATION,
   CONTENT_IS_EMPTY,
-  OPERATION_IS_NOT_ALLOWED
+  OPERATION_IS_NOT_ALLOWED,
+  RESOURCE_IS_NOT_EXISTS
 }
