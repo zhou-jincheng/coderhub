@@ -34,6 +34,12 @@ class MomentService {
     const [result] = await connection.execute(statement, [id])
     return result[0]
   }
+
+  async update(id, content) {
+    const statement = `UPDATE moment SET content = ? WHERE id = ?`
+    await connection.execute(statement, [content, id])
+    return this.queryById(id)
+  }
 }
 
 module.exports = new MomentService

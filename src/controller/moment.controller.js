@@ -34,6 +34,21 @@ class MomentController {
       data: moment
     }
   }
+
+  async update(ctx, next) {
+    const { momentId } = ctx.params
+    const { content } = ctx.request.body
+    if (!content) {
+      ctx.app.emit('error', CONTENT_IS_EMPTY, ctx)
+      return
+    }
+    
+    const result = await momentService.update(momentId, content)
+    ctx.body = {
+      code: 0,
+      data: result
+    }
+  }
 }
 
 module.exports = new MomentController()
