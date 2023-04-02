@@ -20,6 +20,15 @@ class CommentController {
       message: '创建评论成功！'
     }
   }
+
+  async delete(ctx, next) {
+    const { commentId } = ctx.params
+    await commentService.delete(commentId)
+    ctx.body = {
+      code: 0,
+      message: '删除成功！'
+    }
+  }
 }
 
 module.exports = new CommentController()
