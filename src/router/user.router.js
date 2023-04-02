@@ -9,4 +9,6 @@ const userRouter = new Router({
 // 注册用户
 userRouter.post('/register',verifyUser, encryptPassword, userController.create)
 
+userRouter.get('/avatar/:userId', userController.getAvatar)
+
 module.exports = userRouter

@@ -14,6 +14,12 @@ class UserService {
     const [users] = await connection.execute(statement, [name])
     return users
   }
+
+  async findAvatarByUserId(userId) {
+    const statement =  `SELECT * FROM avatar WHERE user_id = ?`
+    const [result] = await connection.execute(statement, [userId])
+    return result.pop()
+  }
 }
 
 module.exports = new UserService()

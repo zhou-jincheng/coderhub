@@ -1,4 +1,7 @@
+const { RESOURCE_IS_NOT_EXISTS } = require('../config/error')
+const userService = require('../service/user.service')
 const service = require('../service/user.service')
+const fs = require('fs')
 
 class UserController {
   async create(ctx, next) {
@@ -12,6 +15,18 @@ class UserController {
       message: '用户注册成功！',
       result
     }
+  }
+
+  async getAvatar(ctx, next) {
+    const { userId } = ctx.params
+    const avatar = await userService.findAvatarByUserId(userId)
+    if (!avatar) {
+      ctx.app.emit('error', RESOURCE_IS_NOT_EXISTS, ctx)
+      return
+    }
+    const { filename, mimetype } = avatar
+    ctx.type = mimetype
+    ctx.body = fs.createReadStream(`./upload/${filename}`)
   }
 }
 
